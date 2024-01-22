@@ -2,12 +2,9 @@
   import Multiplication from "./lib/Multiplication.svelte";
   import ShowAnswer from "./lib/ShowAnswer.svelte";
   import Completed from "./lib/Completed.svelte";
+  import { getQuestions } from "./util.js";
 
-  const questions = [
-    [2, 1],
-    [3, 4],
-    [5, 5],
-  ];
+  const questions = getQuestions(10);
 
   let index = 0;
   let score = 0;
@@ -45,6 +42,7 @@
 
 <main>
   {#if appState === showingQuestion}
+    <div>Question {index + 1} of {questions.length}</div>
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} />
@@ -54,6 +52,9 @@
 </main>
 
 <style>
+  div {
+    text-align: center;
+  }
   main {
     margin-top: 2rem;
   }
