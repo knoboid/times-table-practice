@@ -6,7 +6,7 @@
 
   const questionCount = 10;
   const pauseTime = 1;
-  let questions, index, score, appState, usersAnswer, timer;
+  let questions, index, score, appState, usersAnswer, timer, didUserQuit;
 
   /* APP STATES */
   const showingQuestion = "SHOWING QUESTION";
@@ -49,19 +49,31 @@
     questions = getQuestions(questionCount);
     appState = showingQuestion;
     timer = new Timer(Date.now().valueOf());
+    didUserQuit = false;
+  }
+
+  function handleQuit() {
+    didUserQuit = true;
+    appState = completed;
   }
 </script>
 
 <main>
   {#if appState === showingQuestion}
     <div>Question {index + 1} of {questions.length}</div>
-    <ShowQuestion {num1} {num2} on:keypress={handleKeypress} />
+    <ShowQuestion
+      {num1}
+      {num2}
+      on:keypress={handleKeypress}
+      on:click={handleQuit}
+    />
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
   {:else if appState === completed}
     <Completed
       on:click={handleRestart}
       {score}
+      {didUserQuit}
       questionCount={questions.length}
       time={currentTime(questions.length)}
     />

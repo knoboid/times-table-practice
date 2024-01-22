@@ -15,6 +15,9 @@
     on:keypress
   />
 </div>
+<div class="button-container">
+  <button on:click>Quit</button>
+</div>
 
 <style>
   .problem {
