@@ -4,7 +4,8 @@
   import Completed from "./lib/Completed.svelte";
   import { getQuestions } from "./util.js";
 
-  const questions = getQuestions(10);
+  const questionCount = 2;
+  let questions = getQuestions(questionCount);
 
   let index = 0;
   let score = 0;
@@ -38,6 +39,12 @@
       }, 1000);
     }
   }
+
+  function handleRestart() {
+    score = 0;
+    questions = getQuestions(questionCount);
+    appState = showingQuestion;
+  }
 </script>
 
 <main>
@@ -47,7 +54,11 @@
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} />
   {:else if appState === completed}
-    <Completed {score} questionCount={questions.length} />
+    <Completed
+      on:click={handleRestart}
+      {score}
+      questionCount={questions.length}
+    />
   {/if}
 </main>
 
