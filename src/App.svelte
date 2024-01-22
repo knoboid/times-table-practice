@@ -1,6 +1,7 @@
 <script>
   import Multiplication from "./lib/Multiplication.svelte";
   import ShowAnswer from "./lib/ShowAnswer.svelte";
+  import Completed from "./lib/Completed.svelte";
 
   const questions = [
     [2, 1],
@@ -16,6 +17,7 @@
 
   const showingQuestion = "SHOWING QUESTION";
   const showingAnswer = "SHOWING ANSWER";
+  const completed = "COMPLETED";
 
   let appState = showingQuestion;
 
@@ -28,7 +30,11 @@
       setTimeout(function () {
         appState = showingQuestion;
         index++;
-      }, 2000);
+        if (index === questions.length) {
+          appState = completed;
+          index = 0;
+        }
+      }, 1000);
       if (usersAnswer == answer) {
         console.log("CORRECT");
       } else {
@@ -43,6 +49,8 @@
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} />
+  {:else if appState === completed}
+    <Completed />
   {/if}
 </main>
 
