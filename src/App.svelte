@@ -1,5 +1,6 @@
 <script>
   import Multiplication from "./lib/Multiplication.svelte";
+  import ShowAnswer from "./lib/ShowAnswer.svelte";
 
   let num1 = 4;
   let num2 = 6;
@@ -24,10 +25,16 @@
   }
 </script>
 
-<main class="h-64 flex flex-col justify-center">
+<main>
   {#if appState === showingQuestion}
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
-    <div>Showing Answer</div>
+    <ShowAnswer />
   {/if}
 </main>
+
+<style>
+  main {
+    margin-top: 2rem;
+  }
+</style>
