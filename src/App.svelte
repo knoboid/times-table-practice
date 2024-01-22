@@ -4,6 +4,7 @@
 
   let num1 = 4;
   let num2 = 6;
+  let usersAnswer;
 
   const showingQuestion = "SHOWING QUESTION";
   const showingAnswer = "SHOWING ANSWER";
@@ -12,7 +13,7 @@
 
   function handleKeypress(e) {
     if (e.key === "Enter") {
-      let usersAnswer = e.target.value;
+      usersAnswer = e.target.value;
       e.target.value = "";
       const answer = num1 * num2;
       appState = showingAnswer;
@@ -29,7 +30,7 @@
   {#if appState === showingQuestion}
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
-    <ShowAnswer />
+    <ShowAnswer {num1} {num2} {usersAnswer} />
   {/if}
 </main>
 
