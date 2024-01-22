@@ -5,20 +5,16 @@
   import { getQuestions } from "./util.js";
 
   const questionCount = 2;
-  let questions = getQuestions(questionCount);
+  let questions, index, score, appState, usersAnswer;
 
-  let index = 0;
-  let score = 0;
-
-  $: [num1, num2] = questions[index];
-
-  let usersAnswer;
-
+  /* APP STATES */
   const showingQuestion = "SHOWING QUESTION";
   const showingAnswer = "SHOWING ANSWER";
   const completed = "COMPLETED";
 
-  let appState = showingQuestion;
+  handleRestart();
+
+  $: [num1, num2] = questions[index];
 
   function handleKeypress(e) {
     if (e.key === "Enter") {
@@ -41,6 +37,7 @@
   }
 
   function handleRestart() {
+    index = 0;
     score = 0;
     questions = getQuestions(questionCount);
     appState = showingQuestion;
