@@ -4,7 +4,8 @@
   import Completed from "./lib/Completed.svelte";
   import { getQuestions, Timer } from "./util.js";
 
-  const questionCount = 2;
+  const questionCount = 10;
+  const pauseTime = 1;
   let questions, index, score, appState, usersAnswer, timer;
 
   /* APP STATES */
@@ -16,8 +17,10 @@
 
   $: [num1, num2] = questions[index];
 
-  function currentTime() {
-    return timer.currentTime(Date.now().valueOf());
+  function currentTime(pauseCount) {
+    return timer.currentTime(
+      Date.now().valueOf() - pauseCount * pauseTime * 1000
+    );
   }
 
   function handleKeypress(e) {
@@ -36,7 +39,7 @@
           appState = completed;
           index = 0;
         }
-      }, 1000);
+      }, pauseTime * 1000);
     }
   }
 
@@ -54,13 +57,13 @@
     <div>Question {index + 1} of {questions.length}</div>
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
-    <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime()} />
+    <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
   {:else if appState === completed}
     <Completed
       on:click={handleRestart}
       {score}
       questionCount={questions.length}
-      time={currentTime()}
+      time={currentTime(questions.length)}
     />
   {/if}
 </main>
