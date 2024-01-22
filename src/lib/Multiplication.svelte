@@ -1,11 +1,26 @@
 <script>
   export let num1;
   export let num2;
+
+  function handleKeypress(e) {
+    if (e.key === "Enter") {
+      let usersAnswer = e.target.value;
+      e.target.value = "";
+      console.log(usersAnswer);
+    }
+  }
 </script>
 
 <div class="multiplication">
   <div class="problem">{num1}&times;{num2}=</div>
-  <input class="answer" type="number" maxlength="2" size="2" placeholder="?" />
+  <input
+    class="answer"
+    type="number"
+    maxlength="2"
+    size="2"
+    placeholder="?"
+    on:keypress={handleKeypress}
+  />
 </div>
 
 <style>
