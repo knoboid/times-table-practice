@@ -1,5 +1,5 @@
 <script>
-  import Multiplication from "./lib/Multiplication.svelte";
+  import ShowQuestion from "./lib/ShowQuestion.svelte";
   import ShowAnswer from "./lib/ShowAnswer.svelte";
   import Completed from "./lib/Completed.svelte";
   import { getQuestions, Timer } from "./util.js";
@@ -55,7 +55,7 @@
 <main>
   {#if appState === showingQuestion}
     <div>Question {index + 1} of {questions.length}</div>
-    <Multiplication {num1} {num2} on:keypress={handleKeypress} />
+    <ShowQuestion {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
   {:else if appState === completed}
