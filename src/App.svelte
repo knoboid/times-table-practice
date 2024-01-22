@@ -16,6 +16,10 @@
 
   $: [num1, num2] = questions[index];
 
+  function currentTime() {
+    return timer.currentTime(Date.now().valueOf());
+  }
+
   function handleKeypress(e) {
     if (e.key === "Enter") {
       usersAnswer = e.target.value;
@@ -50,13 +54,13 @@
     <div>Question {index + 1} of {questions.length}</div>
     <Multiplication {num1} {num2} on:keypress={handleKeypress} />
   {:else if appState === showingAnswer}
-    <ShowAnswer {num1} {num2} {usersAnswer} />
+    <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime()} />
   {:else if appState === completed}
     <Completed
       on:click={handleRestart}
       {score}
       questionCount={questions.length}
-      time={timer.currentTime(Date.now().valueOf())}
+      time={currentTime()}
     />
   {/if}
 </main>
