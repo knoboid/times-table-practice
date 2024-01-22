@@ -2,10 +2,10 @@
   import Multiplication from "./lib/Multiplication.svelte";
   import ShowAnswer from "./lib/ShowAnswer.svelte";
   import Completed from "./lib/Completed.svelte";
-  import { getQuestions } from "./util.js";
+  import { getQuestions, Timer } from "./util.js";
 
   const questionCount = 2;
-  let questions, index, score, appState, usersAnswer;
+  let questions, index, score, appState, usersAnswer, timer;
 
   /* APP STATES */
   const showingQuestion = "SHOWING QUESTION";
@@ -41,6 +41,7 @@
     score = 0;
     questions = getQuestions(questionCount);
     appState = showingQuestion;
+    timer = new Timer(Date.now().valueOf());
   }
 </script>
 
@@ -55,6 +56,7 @@
       on:click={handleRestart}
       {score}
       questionCount={questions.length}
+      time={timer.currentTime(Date.now().valueOf())}
     />
   {/if}
 </main>

@@ -65,3 +65,13 @@ function shuffle(array) {
 
   return array;
 }
+
+export class Timer {
+  constructor(startTime) {
+    this.startTime = startTime;
+  }
+
+  currentTime(time) {
+    return Math.floor((time - this.startTime) / 100) / 10;
+  }
+}
