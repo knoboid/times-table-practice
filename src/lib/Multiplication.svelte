@@ -22,7 +22,7 @@
   }
   .answer {
     font-size: 8em;
-    font-weight: 150;
+    font-weight: 100;
     filter: drop-shadow(2px 2px 5px #aaa);
     border-radius: 0.25em;
     text-align: center;
