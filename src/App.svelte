@@ -10,6 +10,7 @@
   ];
 
   let index = 0;
+  let score = 0;
 
   $: [num1, num2] = questions[index];
 
@@ -27,6 +28,9 @@
       e.target.value = "";
       const answer = num1 * num2;
       appState = showingAnswer;
+      if (usersAnswer == answer) {
+        score++;
+      }
       setTimeout(function () {
         appState = showingQuestion;
         index++;
@@ -35,11 +39,6 @@
           index = 0;
         }
       }, 1000);
-      if (usersAnswer == answer) {
-        console.log("CORRECT");
-      } else {
-        console.log("WRONG");
-      }
     }
   }
 </script>
@@ -50,7 +49,7 @@
   {:else if appState === showingAnswer}
     <ShowAnswer {num1} {num2} {usersAnswer} />
   {:else if appState === completed}
-    <Completed />
+    <Completed {score} questionCount={questions.length} />
   {/if}
 </main>
 
