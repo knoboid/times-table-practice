@@ -11,6 +11,7 @@
     maxlength="2"
     size="2"
     placeholder="?"
+    autofocus
     on:keypress
   />
 </div>
