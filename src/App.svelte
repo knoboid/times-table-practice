@@ -3,15 +3,18 @@
   import ShowAnswer from "./lib/ShowAnswer.svelte";
   import Completed from "./lib/Completed.svelte";
   import { getQuestions, Timer } from "./util.js";
+  import AppState, {
+    showQuestion,
+    showAnswer,
+    complete,
+    showingQuestion,
+    showingAnswer,
+    completed,
+  } from "./AppState.js";
 
   const questionCount = 10;
   const pauseTime = 1;
-  let questions, index, score, appState, usersAnswer, timer, didUserQuit;
-
-  /* APP STATES */
-  const showingQuestion = "SHOWING QUESTION";
-  const showingAnswer = "SHOWING ANSWER";
-  const completed = "COMPLETED";
+  let questions, index, score, usersAnswer, timer, didUserQuit;
 
   handleRestart();
 
@@ -28,15 +31,15 @@
       usersAnswer = e.target.value;
       e.target.value = "";
       const answer = num1 * num2;
-      appState = showingAnswer;
+      showAnswer();
       if (usersAnswer == answer) {
         score++;
       }
       setTimeout(function () {
-        appState = showingQuestion;
+        showQuestion();
         index++;
         if (index === questions.length) {
-          appState = completed;
+          complete();
           index = 0;
         }
       }, pauseTime * 1000);
@@ -47,19 +50,19 @@
     index = 0;
     score = 0;
     questions = getQuestions(questionCount);
-    appState = showingQuestion;
+    showQuestion();
     timer = new Timer(Date.now().valueOf());
     didUserQuit = false;
   }
 
   function handleQuit() {
     didUserQuit = true;
-    appState = completed;
+    complete();
   }
 </script>
 
 <main>
-  {#if appState === showingQuestion}
+  {#if showingQuestion($AppState)}
     <div>Question {index + 1} of {questions.length}</div>
     <ShowQuestion
       {num1}
@@ -67,9 +70,9 @@
       on:keypress={handleKeypress}
       on:click={handleQuit}
     />
-  {:else if appState === showingAnswer}
+  {:else if showingAnswer($AppState)}
     <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
-  {:else if appState === completed}
+  {:else if completed($AppState)}
     <Completed
       on:click={handleRestart}
       {score}
