@@ -2,8 +2,16 @@
   import Multiplication from "./lib/Multiplication.svelte";
   import ShowAnswer from "./lib/ShowAnswer.svelte";
 
-  let num1 = 4;
-  let num2 = 6;
+  const questions = [
+    [2, 1],
+    [3, 4],
+    [5, 5],
+  ];
+
+  let index = 0;
+
+  $: [num1, num2] = questions[index];
+
   let usersAnswer;
 
   const showingQuestion = "SHOWING QUESTION";
@@ -17,6 +25,10 @@
       e.target.value = "";
       const answer = num1 * num2;
       appState = showingAnswer;
+      setTimeout(function () {
+        appState = showingQuestion;
+        index++;
+      }, 2000);
       if (usersAnswer == answer) {
         console.log("CORRECT");
       } else {
