@@ -1,18 +1,22 @@
 <script>
+  import AppState, { showingAnswer } from "../AppState.js";
+
   export let num1;
   export let num2;
   export let usersAnswer;
   export let time;
 
-  let isUserCorrect = num1 * num2 == usersAnswer;
-  let verdict = isUserCorrect ? "CORRECT!" : "WRONG";
+  $: isUserCorrect = num1 * num2 == usersAnswer;
+  $: verdict = isUserCorrect ? "CORRECT!" : "WRONG";
 </script>
 
-<div class="verdict">{verdict}</div>
-{#if !isUserCorrect}
-  <div>{num1}&times;{num2} = {num1 * num2}</div>
+{#if showingAnswer($AppState)}
+  <div class="verdict">{verdict}</div>
+  {#if !isUserCorrect}
+    <div>{num1}&times;{num2} = {num1 * num2}</div>
+  {/if}
+  <div class="small-text">Time: {time} seconds</div>
 {/if}
-<div class="small-text">Time: {time} seconds</div>
 
 <style>
   .verdict {

@@ -3,16 +3,9 @@
   import ShowAnswer from "./lib/ShowAnswer.svelte";
   import Completed from "./lib/Completed.svelte";
   import { getQuestions, Timer } from "./util.js";
-  import AppState, {
-    showQuestion,
-    showAnswer,
-    complete,
-    showingQuestion,
-    showingAnswer,
-    completed,
-  } from "./AppState.js";
+  import { showQuestion, showAnswer, complete } from "./AppState.js";
 
-  const questionCount = 10;
+  const questionCount = 3;
   const pauseTime = 1;
   let questions, index, score, usersAnswer, timer, didUserQuit;
 
@@ -62,25 +55,22 @@
 </script>
 
 <main>
-  {#if showingQuestion($AppState)}
-    <div>Question {index + 1} of {questions.length}</div>
-    <ShowQuestion
-      {num1}
-      {num2}
-      on:keypress={handleKeypress}
-      on:click={handleQuit}
-    />
-  {:else if showingAnswer($AppState)}
-    <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
-  {:else if completed($AppState)}
-    <Completed
-      on:click={handleRestart}
-      {score}
-      {didUserQuit}
-      questionCount={questions.length}
-      time={currentTime(questions.length)}
-    />
-  {/if}
+  <ShowQuestion
+    {num1}
+    {num2}
+    {index}
+    questionCount={questions.length}
+    on:keypress={handleKeypress}
+    on:click={handleQuit}
+  />
+  <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
+  <Completed
+    on:click={handleRestart}
+    {score}
+    {didUserQuit}
+    questionCount={questions.length}
+    time={currentTime(questions.length)}
+  />
 </main>
 
 <style>
