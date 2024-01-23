@@ -5,12 +5,14 @@
   export let num2;
   export let index;
   export let questionCount;
+
+  $: [n1, n2] = Math.random() < 0.5 ? [num1, num2] : [num2, num1];
 </script>
 
 {#if showingQuestion($AppState)}
   <div>Question {index + 1} of {questionCount}</div>
   <div class="multiplication">
-    <div class="problem">{num1}&times;{num2}=</div>
+    <div class="problem">{n1}&times;{n2}=</div>
     <input
       class="answer"
       type="number"
