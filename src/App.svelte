@@ -33,7 +33,6 @@
         showQuestion();
         index++;
         if (index === questions.length) {
-          console.log(timer.currentTime(Date.now().valueOf()));
           complete();
           index = 0;
         }
