@@ -75,9 +75,6 @@
 </main>
 
 <style>
-  div {
-    text-align: center;
-  }
   main {
     margin-top: 2rem;
   }
