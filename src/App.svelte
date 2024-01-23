@@ -5,9 +5,9 @@
   import { getQuestions, Timer } from "./util.js";
   import { showQuestion, showAnswer, complete } from "./AppState.js";
 
-  const questionCount = 3;
+  const questionCount = 10;
   const pauseTime = 1;
-  let questions, index, score, usersAnswer, timer, didUserQuit;
+  let questions, index, score, usersAnswer, timer, didUserQuit, time;
 
   handleRestart();
 
@@ -24,6 +24,7 @@
       usersAnswer = e.target.value;
       e.target.value = "";
       const answer = num1 * num2;
+      time = currentTime(index);
       showAnswer();
       if (usersAnswer == answer) {
         score++;
@@ -32,6 +33,7 @@
         showQuestion();
         index++;
         if (index === questions.length) {
+          console.log(timer.currentTime(Date.now().valueOf()));
           complete();
           index = 0;
         }
@@ -63,13 +65,13 @@
     on:keypress={handleKeypress}
     on:click={handleQuit}
   />
-  <ShowAnswer {num1} {num2} {usersAnswer} time={currentTime(index)} />
+  <ShowAnswer {num1} {num2} {usersAnswer} {time} />
   <Completed
     on:click={handleRestart}
     {score}
     {didUserQuit}
     questionCount={questions.length}
-    time={currentTime(questions.length)}
+    {time}
   />
 </main>
 
